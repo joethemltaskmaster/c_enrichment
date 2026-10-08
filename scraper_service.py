@@ -36,13 +36,11 @@ import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
-load_dotenv(r"C:\Users\Joseph\Desktop\Creator_enrichment_pipeline\.env")
+load_dotenv()
 
-INPUT_FILE = os.getenv("CREATOR_CACHE_FILE", "creator_cache.json")
-OUTPUT_FILE = os.getenv("SCRAPE_OUTPUT_FILE", "scraped_data.json")
-USER_AGENT = os.getenv(
-    "SCRAPER_USER_AGENT", "Mozilla/5.0 (compatible; CreatorResearchBot/1.0)"
-)
+INPUT_FILE = os.getenv("CREATOR_CACHE_FILE") or "creator_cache.json"
+OUTPUT_FILE = os.getenv("SCRAPE_OUTPUT_FILE") or "scraped_data.json"
+USER_AGENT = os.getenv("SCRAPER_USER_AGENT") or "Mozilla/5.0 (compatible; CreatorResearchBot/1.0)"
 ROBOT_NAME = "CreatorResearchBot"  # token matched against robots.txt rules
 MAX_BYTES = 2_000_000  # never download more than ~2 MB per page
 
@@ -235,9 +233,13 @@ def parse_page(content: bytes, base_url: str, creator_name: str = "") -> Dict[st
             if urlsplit(absolute).scheme in ("http", "https"):
                 links.append((a.get_text(" ", strip=True), absolute))
 
+    script_count = len(soup.find_all("script"))
     for tag in soup(["script", "style", "noscript", "svg", "template"]):
         tag.decompose()
     text = " ".join(soup.get_text(" ", strip=True).split())
+    # Very little visible text plus several scripts usually means the content is
+    # built by JavaScript, which requests + BeautifulSoup cannot see.
+    thin_content = len(text) < 250 and script_count >= 3
 
     for match in EMAIL_RE.findall(text[:300_000]):
         cleaned = _clean_email(match)
@@ -286,6 +288,7 @@ def parse_page(content: bytes, base_url: str, creator_name: str = "") -> Dict[st
         "social_links": social,
         "contact_links": contact_links,
         "mentions_name": bool(name) and (name in lowered or name in title.lower()),
+        "thin_content": thin_content,
     }
 
 
@@ -357,7 +360,12 @@ class ScrapeStore:
 
 
 def load_targets(path: str = INPUT_FILE, only_ids: Optional[Sequence[str]] = None) -> List[Dict[str, Any]]:
-    """Read creator_cache.json and return creators that have URLs."""
+    """Read creator_cache.json and return creators that have pages to scrape.
+
+    `urls` holds the pages selected by creator_search.py (old single-query
+    records work too). `reserve` holds next-best pages used as fallbacks when a
+    selected page is blocked or empty.
+    """
     if not os.path.exists(path):
         raise FileNotFoundError(f"{path} not found. Run creator_search.py first.")
     with open(path, "r", encoding="utf-8") as f:
@@ -367,9 +375,11 @@ def load_targets(path: str = INPUT_FILE, only_ids: Optional[Sequence[str]] = Non
         if only_ids and creator_id not in only_ids:
             continue
         urls = [u["link"] for u in rec.get("urls", []) if u.get("link")]
+        reserve = [u["link"] for u in rec.get("reserve", []) if u.get("link")]
         if rec.get("status") == "done" and urls:
             targets.append(
-                {"creator_id": creator_id, "name": rec.get("name", ""), "row": rec.get("row"), "urls": urls}
+                {"creator_id": creator_id, "name": rec.get("name", ""), "row": rec.get("row"),
+                 "urls": urls, "reserve": [u for u in reserve if u not in urls]}
             )
     return targets
 
@@ -379,6 +389,19 @@ def _needs_scrape(store: ScrapeStore, creator_id: str, url: str, force: bool) ->
         return True
     rec = store.get_page(creator_id, url)
     return rec is None or rec.get("status") in RETRYABLE_STATUSES
+
+
+def _failed(record: Optional[Dict[str, Any]]) -> bool:
+    """True when a page gave us nothing usable (blocked, missing, empty or JS-only)."""
+    return bool(record) and (record.get("status") != "ok" or bool(record.get("thin_content")))
+
+
+def _reason(record: Dict[str, Any]) -> str:
+    if record.get("status") == "ok":
+        return "thin_content_js_suspected"
+    if record.get("status") == "http_error":
+        return f"http_error_{record.get('http_status')}"
+    return record.get("status", "unknown")
 
 
 # --------------------------------------------------------------------------
@@ -393,8 +416,14 @@ def run_scrape(
     limit: Optional[int] = None,
     force: bool = False,
     session: Optional[requests.Session] = None,
+    max_fallbacks: int = 2,
 ) -> Dict[str, Any]:
-    """Scrape every pending URL. `limit` caps how many pages are fetched this run."""
+    """Scrape every pending URL. `limit` caps how many pages are fetched this run.
+
+    When a page fails (blocked, robots, 4xx, non-HTML, JS-only), the reason is
+    recorded on that page and the next reserve page for the creator is tried,
+    up to `max_fallbacks` replacements per creator.
+    """
     session = session or requests.Session()
     session.headers.update(
         {
@@ -404,13 +433,29 @@ def run_scrape(
         }
     )
     robots = RobotsCache(session)
-    summary: Dict[str, Any] = {"scraped": 0, "already_done": 0, "by_status": {}}
+    summary: Dict[str, Any] = {"scraped": 0, "already_done": 0, "fallbacks_used": 0, "by_status": {}}
     last_hit: Dict[str, float] = {}
 
     for t in targets:
-        for url in t["urls"]:
+        queue = list(t["urls"])
+        reserve = [u for u in t.get("reserve", []) if u not in queue]
+        fallback_of: Dict[str, str] = {}
+        fallbacks = 0
+
+        def add_fallback(failed_url: str) -> None:
+            nonlocal fallbacks
+            if reserve and fallbacks < max_fallbacks:
+                nxt = reserve.pop(0)
+                fallback_of[nxt] = failed_url
+                queue.append(nxt)
+                fallbacks += 1
+
+        while queue:
+            url = queue.pop(0)
             if not _needs_scrape(store, t["creator_id"], url, force):
                 summary["already_done"] += 1
+                if _failed(store.get_page(t["creator_id"], url)):
+                    add_fallback(url)
                 continue
             if limit is not None and summary["scraped"] >= limit:
                 return summary
@@ -422,12 +467,23 @@ def run_scrape(
             record = scrape_url(url, t["name"], session, robots, skip_domains, timeout)
             last_hit[domain] = time.monotonic()
 
+            if url in fallback_of:
+                record["fallback_for"] = fallback_of[url]
+                summary["fallbacks_used"] += 1
+            if _failed(record):
+                record["blocked_reason"] = _reason(record)
+                add_fallback(url)
+
             store.set_page(t["creator_id"], t["name"], t["row"], url, record)
             summary["scraped"] += 1
             status = record["status"]
             summary["by_status"][status] = summary["by_status"].get(status, 0) + 1
-            extra = f" | emails: {len(record.get('emails', []))}" if status == "ok" else ""
-            print(f"[{t['creator_id']}] {status:15} {url}{extra}")
+            if record.get("blocked_reason"):
+                extra = f" | reason: {record['blocked_reason']}"
+            else:
+                extra = f" | emails: {len(record.get('emails', []))}"
+            tag = " (fallback)" if url in fallback_of else ""
+            print(f"[{t['creator_id']}] {status:15} {url}{tag}{extra}")
     return summary
 
 
@@ -468,6 +524,7 @@ def build_parser() -> argparse.ArgumentParser:
         default=",".join(DEFAULT_SKIP_DOMAINS),
         help="Comma-separated domains never fetched. Pass '' to skip nothing.",
     )
+    p.add_argument("--max-fallbacks", type=int, default=2, help="Reserve pages to try per creator when pages fail.")
     p.add_argument("--force", action="store_true", help="Re-scrape pages already done.")
     p.add_argument("--dry-run", action="store_true", help="List what would be scraped; fetch nothing.")
     p.add_argument("--export-csv", metavar="FILE", help="Also write a one-row-per-creator CSV.")
@@ -488,7 +545,7 @@ def main(argv=None) -> None:
 
     if args.dry_run:
         for t in targets:
-            print(f"{t['creator_id']} | {t['name']}")
+            print(f"{t['creator_id']} | {t['name']} ({len(t['reserve'])} reserve page(s))")
             for url in t["urls"]:
                 if _domain_matches(_domain(url), skip):
                     state = "skip (blocked domain)"
@@ -502,6 +559,7 @@ def main(argv=None) -> None:
     summary = run_scrape(
         targets, store, skip_domains=skip, delay=args.delay,
         timeout=args.timeout, limit=args.limit, force=args.force,
+        max_fallbacks=args.max_fallbacks,
     )
     print("Summary:", json.dumps(summary, indent=2))
     print(f"Saved to {args.output}")
