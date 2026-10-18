@@ -42,7 +42,7 @@ from googleapiclient.errors import HttpError
 load_dotenv()  # must run before os.environ / os.getenv are read below
 
 from query_builder import TARGET_FIELDS, Query, plan_queries, queries_signature
-from sheets_client import CREATOR_SHEET, SERVICE_ACCOUNT_FILE, SPREADSHEET_ID, SheetsClient
+from services.sheets_client import CREATOR_SHEET, SERVICE_ACCOUNT_FILE, SPREADSHEET_ID, SheetsClient
 from source_ranker import rank_sources
 
 SEARCHAPI_URL = "https://www.searchapi.io/api/v1/search"
