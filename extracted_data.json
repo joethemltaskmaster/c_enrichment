@@ -1,0 +1,417 @@
+{
+  "CT_0001": {
+    "name": "Mrs Nancy Umeh",
+    "row": 2,
+    "context": {
+      "location": "",
+      "category": ""
+    },
+    "inputs": {
+      "search_results": 25,
+      "scraped_pages_ok": 1
+    },
+    "best": {
+      "category": {
+        "value": "Parenting & family",
+        "confidence": 0.37,
+        "source": "https://www.facebook.com/korraobidi1/posts/family-my-sister-mrs-nancy-umeh-is-teaching-everyone-how-to-grow-their-brand-the/1652205769601268/"
+      },
+      "instagram": {
+        "value": "https://www.instagram.com/nancyumeh_",
+        "confidence": 0.8,
+        "source": "https://www.instagram.com/nancyumeh_"
+      },
+      "twitter": {
+        "value": "https://x.com/NancyUmeh_",
+        "confidence": 0.8,
+        "source": "https://x.com/NancyUmeh_"
+      },
+      "facebook": {
+        "value": "https://www.facebook.com/nancyobidiumeh",
+        "confidence": 0.8,
+        "source": "https://www.facebook.com/nancyobidiumeh"
+      },
+      "audience_size": {
+        "value": 553000,
+        "confidence": 0.9,
+        "source": "https://www.instagram.com/nancyumeh_",
+        "platform": "instagram",
+        "as_of": "2026-10-18",
+        "by_platform": {
+          "instagram": 553000
+        }
+      }
+    },
+    "needs_review": [
+      "category"
+    ],
+    "candidates": {
+      "emails": [
+        {
+          "value": "h@gmail.com",
+          "confidence": 0.0,
+          "sources": [
+            {
+              "url": "https://contactout.com/nancy-umeh-35256",
+              "kind": "search_result",
+              "page_type": "data_broker",
+              "evidence": "s Student at Nnamdi Azikiwe University. Get Nancy Umeh's email: na****h@gmail.com, phone: (**) *** *** 112, and more.",
+              "as_of": "2026-10-18",
+              "confidence": 0.0
+            }
+          ],
+          "scope": "unknown",
+          "kind": "personal",
+          "free_provider": true
+        }
+      ],
+      "phones": [],
+      "website": [],
+      "link_in_bio": [],
+      "social": {
+        "instagram": [
+          {
+            "value": "https://www.instagram.com/nancyumeh_",
+            "confidence": 0.8,
+            "sources": [
+              {
+                "url": "https://www.instagram.com/nancyumeh_",
+                "kind": "search_result",
+                "page_type": "social_instagram",
+                "evidence": "Mrs Nancy Umeh (@nancyumeh_). Mrs Nancy Umeh. 553K followers. 483 following. Helping you build a brand that will pay you forever! #NUVisibleChallenge2 starts 1s",
+                "as_of": "2026-10-18",
+                "confidence": 0.8
+              }
+            ],
+            "handle": "nancyumeh_"
+          }
+        ],
+        "twitter": [
+          {
+            "value": "https://x.com/NancyUmeh_",
+            "confidence": 0.8,
+            "sources": [
+              {
+                "url": "https://x.com/NancyUmeh_",
+                "kind": "search_result",
+                "page_type": "social_twitter",
+                "evidence": "Nancy Umeh (@NancyUmeh_) / X. Mrs Nancy Umeh (@nancyumeh_) • Instagram photos and videos · 1 · 6 · 803 ... Just posted a photo. instagram.com. Mrs Nancy Umeh (@",
+                "as_of": "2026-10-18",
+                "confidence": 0.8
+              }
+            ],
+            "handle": "NancyUmeh_"
+          }
+        ],
+        "facebook": [
+          {
+            "value": "https://www.facebook.com/nancyobidiumeh",
+            "confidence": 0.8,
+            "sources": [
+              {
+                "url": "https://www.facebook.com/nancyobidiumeh",
+                "kind": "search_result",
+                "page_type": "social_facebook",
+                "evidence": "Nancy Umeh (@nancyobidiumeh). She said, dance to this. I flew up, oiled my waist and here is the result. I love you Mrs Nancy Umeh #bellydancefusion #wass #korr",
+                "as_of": "2026-10-18",
+                "confidence": 0.8
+              }
+            ],
+            "handle": "nancyobidiumeh"
+          }
+        ]
+      },
+      "location": [
+        {
+          "value": "Nigeria",
+          "confidence": 0.07,
+          "sources": [
+            {
+              "url": "https://www.facebook.com/nancyobidiumeh/photos/1310652377904041/",
+              "kind": "search_result",
+              "page_type": "social_content",
+              "evidence": "eh added a new photo.. Nancy Umeh added a new photo. Ready-To-Wear in Nigeria. Nancy 🤗. your kind comments on our photos🥰.",
+              "as_of": "2026-10-18",
+              "confidence": 0.07
+            }
+          ]
+        }
+      ],
+      "category": [
+        {
+          "value": "Parenting & family",
+          "confidence": 0.37,
+          "sources": [
+            {
+              "url": "https://www.facebook.com/korraobidi1/posts/family-my-sister-mrs-nancy-umeh-is-teaching-everyone-how-to-grow-their-brand-the/1652205769601268/",
+              "kind": "search_result",
+              "page_type": "social_content",
+              "evidence": "keywords: family",
+              "as_of": "2026-10-18",
+              "confidence": 0.37
+            }
+          ],
+          "evidence_pages": 2
+        },
+        {
+          "value": "Food & cooking",
+          "confidence": 0.35,
+          "sources": [
+            {
+              "url": "https://www.threads.com/@nancyumeh_",
+              "kind": "search_result",
+              "page_type": "other",
+              "evidence": "keywords: food",
+              "as_of": "2026-10-18",
+              "confidence": 0.35
+            }
+          ],
+          "evidence_pages": 2
+        },
+        {
+          "value": "Dance",
+          "confidence": 0.31,
+          "sources": [
+            {
+              "url": "https://www.facebook.com/nancyobidiumeh/",
+              "kind": "search_result",
+              "page_type": "social_facebook",
+              "evidence": "keywords: dance",
+              "as_of": "2026-10-18",
+              "confidence": 0.31
+            }
+          ],
+          "evidence_pages": 1
+        },
+        {
+          "value": "Fitness & wellness",
+          "confidence": 0.29,
+          "sources": [
+            {
+              "url": "https://www.vanguardngr.com/2025/05/nancy-umeh-speaks-on-health-lifestyle-entrepreneurship/",
+              "kind": "search_result",
+              "page_type": "interview",
+              "evidence": "keywords: health",
+              "as_of": "2026-10-18",
+              "confidence": 0.29
+            }
+          ],
+          "evidence_pages": 1
+        },
+        {
+          "value": "Lifestyle & vlogging",
+          "confidence": 0.29,
+          "sources": [
+            {
+              "url": "https://www.vanguardngr.com/2025/05/nancy-umeh-speaks-on-health-lifestyle-entrepreneurship/",
+              "kind": "search_result",
+              "page_type": "interview",
+              "evidence": "keywords: lifestyle",
+              "as_of": "2026-10-18",
+              "confidence": 0.29
+            }
+          ],
+          "evidence_pages": 1
+        },
+        {
+          "value": "Business & finance",
+          "confidence": 0.28,
+          "sources": [
+            {
+              "url": "https://contactout.com/nancy-umeh-13523",
+              "kind": "search_result",
+              "page_type": "data_broker",
+              "evidence": "keywords: finance",
+              "as_of": "2026-10-18",
+              "confidence": 0.28
+            }
+          ],
+          "evidence_pages": 1
+        }
+      ],
+      "audience": {
+        "instagram": [
+          {
+            "value": 553000,
+            "confidence": 0.9,
+            "sources": [
+              {
+                "url": "https://www.instagram.com/nancyumeh_",
+                "kind": "search_result",
+                "page_type": "social_instagram",
+                "evidence": "553K followers",
+                "as_of": "2026-10-18",
+                "confidence": 0.9
+              }
+            ]
+          },
+          {
+            "value": 470000,
+            "confidence": 0.45,
+            "sources": [
+              {
+                "url": "https://www.facebook.com/naijabrandchick/posts/celebrating-470k-followers-on-instagrami-remember-when-i-celebrated-400k-and-mrs/1500321201904121/",
+                "kind": "search_result",
+                "page_type": "social_content",
+                "evidence": "470k followers",
+                "as_of": "2026-10-18",
+                "confidence": 0.45
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "extracted_at": "2026-10-19T00:21:23+00:00"
+  },
+  "CT_0002": {
+    "name": "Amarachi Ukpai",
+    "row": 3,
+    "context": {
+      "location": "",
+      "category": ""
+    },
+    "inputs": {
+      "search_results": 20,
+      "scraped_pages_ok": 0
+    },
+    "best": {
+      "facebook": {
+        "value": "https://www.facebook.com/amarachi.ukpai.1",
+        "confidence": 0.8,
+        "source": "https://www.facebook.com/amarachi.ukpai.1"
+      },
+      "audience_size": {
+        "value": 5162,
+        "confidence": 0.73,
+        "source": "https://www.facebook.com/media/set/?vanity=DIVINE530&set=a.122113170561412360",
+        "platform": "unspecified",
+        "as_of": "2026-10-18",
+        "by_platform": {
+          "unspecified": 5162
+        }
+      }
+    },
+    "needs_review": [],
+    "candidates": {
+      "emails": [],
+      "phones": [],
+      "website": [],
+      "link_in_bio": [],
+      "social": {
+        "facebook": [
+          {
+            "value": "https://www.facebook.com/amarachi.ukpai.1",
+            "confidence": 0.8,
+            "sources": [
+              {
+                "url": "https://www.facebook.com/amarachi.ukpai.1",
+                "kind": "search_result",
+                "page_type": "social_facebook",
+                "evidence": "Amarachi Ukpai. Amarachi Ukpai is on Facebook. Join Facebook to connect with Amarachi Ukpai and others you may know. Facebook gives people the power to share an",
+                "as_of": "2026-10-18",
+                "confidence": 0.8
+              }
+            ],
+            "handle": "amarachi.ukpai.1"
+          },
+          {
+            "value": "https://www.facebook.com/amarachi.ukpai.9",
+            "confidence": 0.8,
+            "sources": [
+              {
+                "url": "https://www.facebook.com/amarachi.ukpai.9",
+                "kind": "search_result",
+                "page_type": "social_facebook",
+                "evidence": "Amarachi Ukpai. Profile photo of Amarachi. Amarachi Ukpai. 󱘛 Ikotun · 󱜂 folk Technical College ikwo. 󱜏. Lives in Ikotun, Lagos, Nigeria. 󱜧. Went to folk Technic",
+                "as_of": "2026-10-18",
+                "confidence": 0.8
+              }
+            ],
+            "handle": "amarachi.ukpai.9"
+          }
+        ]
+      },
+      "location": [
+        {
+          "value": "Lagos, Nigeria",
+          "confidence": 0.17,
+          "sources": [
+            {
+              "url": "https://www.facebook.com/amarachi.ukpai.9/",
+              "kind": "search_result",
+              "page_type": "social_facebook",
+              "evidence": "Ukpai. 󱘛 Ikotun · 󱜂 folk Technical College ikwo. 󱜏. Lives in Ikotun, Lagos, Nigeria. 󱜧. Went to folk Technical College ...",
+              "as_of": "2026-10-18",
+              "confidence": 0.17
+            }
+          ]
+        },
+        {
+          "value": "Port Harcourt, Nigeria",
+          "confidence": 0.17,
+          "sources": [
+            {
+              "url": "https://www.facebook.com/amarachiibe.ukpai/about",
+              "kind": "search_result",
+              "page_type": "social_content",
+              "evidence": "Amarachi Ibe Ukpai (@amarachiibe.ukpai) - About. Digital creator · 󱘛 Port Harcourt · 󱜆 Sky Packing Material Trd: LLC · 󱜧 Coronata Secondary School. 󱙶. F",
+              "as_of": "2026-10-18",
+              "confidence": 0.17
+            }
+          ]
+        },
+        {
+          "value": "Nigeria",
+          "confidence": 0.14,
+          "sources": [
+            {
+              "url": "https://www.facebook.com/amarachi.ukpai.9/",
+              "kind": "search_result",
+              "page_type": "social_facebook",
+              "evidence": "󱘛 Ikotun · 󱜂 folk Technical College ikwo. 󱜏. Lives in Ikotun, Lagos, Nigeria. 󱜧. Went to folk Technical College ...",
+              "as_of": "2026-10-18",
+              "confidence": 0.14
+            }
+          ]
+        }
+      ],
+      "category": [],
+      "audience": {
+        "unspecified": [
+          {
+            "value": 5162,
+            "confidence": 0.73,
+            "sources": [
+              {
+                "url": "https://www.facebook.com/media/set/?vanity=DIVINE530&set=a.122113170561412360",
+                "kind": "search_result",
+                "page_type": "social_content",
+                "evidence": "5162 followers",
+                "as_of": "2026-10-18",
+                "confidence": 0.35
+              },
+              {
+                "url": "https://www.facebook.com/media/set/?vanity=DIVINE530&set=a.122093937015412360",
+                "kind": "search_result",
+                "page_type": "social_content",
+                "evidence": "5162 followers",
+                "as_of": "2026-10-18",
+                "confidence": 0.35
+              },
+              {
+                "url": "https://www.facebook.com/DIVINE530/reels/",
+                "kind": "search_result",
+                "page_type": "social_content",
+                "evidence": "5162 followers",
+                "as_of": "2026-10-18",
+                "confidence": 0.35
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "extracted_at": "2026-10-19T00:21:23+00:00"
+  }
+}

@@ -444,6 +444,7 @@ def collect_social_profiles(
                 "confidence": round(conf, 2),
                 "match": "likely" if conf >= 0.7 else "possible",
                 "title": c["title"],
+                "snippet": (c.get("snippet") or "")[:240],
                 "queries": c["queries"],
                 "primary": False,
             }
